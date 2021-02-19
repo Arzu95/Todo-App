@@ -10,34 +10,60 @@ struct ContentView: View {
   
   var body: some View {
     NavigationView{
-      List{
-        ForEach(self.todos, id: \.self){ todo in
-          HStack{
-            Text(todo.name ?? "Unknown")
+        ZStack{
+            List{
+              ForEach(self.todos, id: \.self){ todo in
+                HStack{
+                  Text(todo.name ?? "Unknown")
+                  
+                  Spacer()
+                  
+                  Text(todo.priority ?? "Unknown")
+                }
+              }
+              .onDelete(perform: deleteTodo)
+              
+            }
+            .navigationBarTitle("Todo", displayMode: .inline)
+            .navigationBarItems(
+              leading: EditButton(),
+              trailing:
+                // shift tab harus di select dulu => buat mindahin ke kiri
+                Button(action: {
+                  self.showingAddTodoView.toggle()
+                }){
+                  Image(systemName: "plus")
+                }
+              .sheet(isPresented: $showingAddTodoView){
+                AddTodoView().environment(\.managedObjectContext, self.managedObjectContext)
+              }
+            )
             
-            Spacer()
-            
-            Text(todo.priority ?? "Unknown")
-          }
+            if todos.count == 0{
+                EmptyListView()
+            }
         }
-        .onDelete(perform: deleteTodo)
-        
-      }
-      .navigationBarTitle("Todo", displayMode: .inline)
-      .navigationBarItems(
-        leading: EditButton(),
-        trailing:
-          // shift tab harus di select dulu => buat mindahin ke kiri
-          Button(action: {
-            self.showingAddTodoView.toggle()
-          }){
-            Image(systemName: "plus")
-          }
-        .sheet(isPresented: $showingAddTodoView){
-          AddTodoView().environment(\.managedObjectContext, self.managedObjectContext)
-        })
+            .sheet(isPresented: $showingAddTodoView){
+                AddTodoView().environment(\.managedObjectContext, self.managedObjectContext)
+            }
+            .overlay(
+                ZStack{
+                    Button(action: {
+                        self.showingAddTodoView.toggle()
+                    }){
+                        Image(systemName: "plus.circle.fill")
+                            .resizable()
+                            .scaledToFit()
+                            .background(Circle().fill(Color("ColorBase")))
+                            .frame(width: 48, height: 48, alignment: .center)
+                    }
+                }
+                .padding(.bottom, 15)
+                .padding(.trailing, 15)
+                ,alignment: .bottomTrailing
+            )
+        }
     }
-  }
   
   private func deleteTodo(at offsets: IndexSet){
     for index in offsets{

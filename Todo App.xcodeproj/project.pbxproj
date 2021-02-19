@@ -15,6 +15,7 @@
 		185E1D6725DA1DFB001C912C /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 185E1D6625DA1DFB001C912C /* Preview Assets.xcassets */; };
 		185E1D6A25DA1DFB001C912C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 185E1D6825DA1DFB001C912C /* LaunchScreen.storyboard */; };
 		185E1D7525DA1F1D001C912C /* AddTodoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 185E1D7425DA1F1D001C912C /* AddTodoView.swift */; };
+		18707FED25DE19E800AC7B9A /* EmptyListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18707FEC25DE19E800AC7B9A /* EmptyListView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +29,7 @@
 		185E1D6925DA1DFB001C912C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		185E1D6B25DA1DFB001C912C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		185E1D7425DA1F1D001C912C /* AddTodoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTodoView.swift; sourceTree = "<group>"; };
+		18707FEC25DE19E800AC7B9A /* EmptyListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyListView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -85,6 +87,7 @@
 				185E1D5C25DA1DF8001C912C /* SceneDelegate.swift */,
 				185E1D5A25DA1DF8001C912C /* AppDelegate.swift */,
 				185E1D7425DA1F1D001C912C /* AddTodoView.swift */,
+				18707FEC25DE19E800AC7B9A /* EmptyListView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -161,6 +164,7 @@
 			files = (
 				185E1D5B25DA1DF8001C912C /* AppDelegate.swift in Sources */,
 				185E1D5D25DA1DF8001C912C /* SceneDelegate.swift in Sources */,
+				18707FED25DE19E800AC7B9A /* EmptyListView.swift in Sources */,
 				185E1D5F25DA1DF8001C912C /* ContentView.swift in Sources */,
 				185E1D6225DA1DF8001C912C /* Todo_App.xcdatamodeld in Sources */,
 				185E1D7525DA1F1D001C912C /* AddTodoView.swift in Sources */,
