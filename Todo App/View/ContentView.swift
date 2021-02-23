@@ -7,65 +7,69 @@ struct ContentView: View {
   @FetchRequest(entity: Todo.entity(), sortDescriptors: [NSSortDescriptor(keyPath: \Todo.name, ascending: true)]) var todos: FetchedResults<Todo>
   
   @State private var showingAddTodoView: Bool = false
-    @State private var showingSettingsView: Bool = false
+  @State private var showingSettingsView: Bool = false
+  
+  @EnvironmentObject var iconSettings: IconNames
   
   var body: some View {
     NavigationView{
-        ZStack{
-            List{
-              ForEach(self.todos, id: \.self){ todo in
-                HStack{
-                  Text(todo.name ?? "Unknown")
-                  
-                  Spacer()
-                  
-                  Text(todo.priority ?? "Unknown")
-                }
-              }
-              .onDelete(perform: deleteTodo)
+      ZStack{
+        List{
+          ForEach(self.todos, id: \.self){ todo in
+            HStack{
+              Text(todo.name ?? "Unknown")
               
+              Spacer()
+              
+              Text(todo.priority ?? "Unknown")
             }
-            .navigationBarTitle("Todo", displayMode: .inline)
-            .navigationBarItems(
-              leading: EditButton(),
-              trailing:
-                // shift tab harus di select dulu => buat mindahin ke kiri
-                Button(action: {
-                  self.showingSettingsView.toggle()
-                }){
-                  Image(systemName: "gear")
-                }
-              .sheet(isPresented: $showingSettingsView){
-                
-                SettingsView()
-              }
-            )
-            
-            if todos.count == 0{
-                EmptyListView()
-            }
+          }
+          .onDelete(perform: deleteTodo)
+          
         }
-            .sheet(isPresented: $showingAddTodoView){
-                AddTodoView().environment(\.managedObjectContext, self.managedObjectContext)
+        .navigationBarTitle("Todo", displayMode: .inline)
+        .navigationBarItems(
+          leading: EditButton(),
+          trailing:
+            // shift tab harus di select dulu => buat mindahin ke kiri
+            Button(action: {
+              // diganti jadi showingSettingsView
+              self.showingSettingsView.toggle()
+            }){
+              Image(systemName: "gear")
             }
-            .overlay(
-                ZStack{
-                    Button(action: {
-                        self.showingAddTodoView.toggle()
-                    }){
-                        Image(systemName: "plus.circle.fill")
-                            .resizable()
-                            .scaledToFit()
-                            .background(Circle().fill(Color("ColorBase")))
-                            .frame(width: 48, height: 48, alignment: .center)
-                    }
-                }
-                .padding(.bottom, 15)
-                .padding(.trailing, 15)
-                ,alignment: .bottomTrailing
-            )
+            // diganti jadi showingSettingsView
+          .sheet(isPresented: $showingSettingsView){
+            // diganti jadi SettingsView
+            SettingsView().environmentObject(self.iconSettings)
+          }
+        )
+        
+        if todos.count == 0{
+          EmptyListView()
         }
+      }
+      .sheet(isPresented: $showingAddTodoView){
+        AddTodoView().environment(\.managedObjectContext, self.managedObjectContext)
+      }
+      .overlay(
+        ZStack{
+          Button(action: {
+            self.showingAddTodoView.toggle()
+          }){
+            Image(systemName: "plus.circle.fill")
+              .resizable()
+              .scaledToFit()
+              .background(Circle().fill(Color("ColorBase")))
+              .frame(width: 48, height: 48, alignment: .center)
+          }
+        }
+        .padding(.bottom, 15)
+        .padding(.trailing, 15)
+        , alignment: .bottomTrailing
+      )
     }
+  }
   
   private func deleteTodo(at offsets: IndexSet){
     for index in offsets{
